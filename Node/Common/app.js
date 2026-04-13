@@ -1,7 +1,19 @@
-function work(){
-  console.log("this is developer from app.js")
+function work() {
+  console.log("this is developer from app.js");
 }
+function sum(a, b) {
+  let c = a + b;
+  console.log(c);
+}
+let global = "my name is kebede";
+function someFunction() {
+  let AAvar = 2;
+  console.log(AAvar);
+}
+// work();
+module.exports.sum = sum;
+module.exports.work = work;
+module.exports.someFunction = someFunction;
+module.exports.globe = global;
 
-work();
-module.exports.work=work;
-// console.log(module);
+console.log(module);
