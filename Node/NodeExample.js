@@ -1,15 +1,13 @@
 // here is solution for having the same name in one file but different functionality 
 
-// (function require() {
-//   let  x=()=>{
-//     console.log("merde in the building");
-//   }
-// })();
-// let  x=()=>{
-//   console.log("su in the building");
-// }
-// x();
-// x();
+(function require() {
+    console.log("merde in the building");
+})();
+let  x=()=>{
+  console.log("su in the building");
+}
+x();
+x();
 
 // commen os methods
 // let os =require("os");

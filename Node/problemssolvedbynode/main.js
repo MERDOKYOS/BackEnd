@@ -1,0 +1,2 @@
+AAsomefunction();
+console.log(window)
