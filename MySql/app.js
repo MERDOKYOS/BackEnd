@@ -53,6 +53,26 @@ app.get("/install", (req, res) => {
   res.end("Both tables are created");
 });
 
+let createForm = `CREATE TABLE Form(
+  name VARCHAR(250) NOT NULL,
+  brand VARCHAR(250) NOT NULL,
+  price INT NOT NULL,
+  storage INT NOT NULL,
+  color VARCHAR(200) NOT NULL,
+  year INT NOT NULL,
+  description VARCHAR(400) NOT NULL
+);`;
+
+app.get("/form", async (req, res) => {
+  try {
+    await connection.query(createForm);
+    res.send("form table created");
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("something error");
+  }
+});
+
 // we can use the below for async ones it better to use this kinds
 
 // app.get("/install", async (req, res) => {
@@ -67,3 +87,42 @@ app.get("/install", (req, res) => {
 //     res.send("error creating table");
 //   }
 // });
+
+// below this we try to add clients information submitted to the database
+
+const bodyparser = require("body-parser");
+app.use(bodyparser.urlencoded());
+
+// /* or only using express module only not body-parser we can use the below better method */
+
+// app.use(express.urlencoded({ extended: true }));
+
+app.post("/addIphone", (req, res) => {
+  console.table(req.body);
+
+  const { name, brand, price, storage, color, year, description } = req.body;
+
+  // let name = req.body.name;
+  // let brand = req.body.brand;
+  // let price = req.body.price;
+  // let storage = req.body.storage;
+  // let color = req.body.color;
+  // let year = req.body.year;
+  // let desc = req.body.description;
+
+  // let insert = `INSERT INTO Form (name,brand,price,storage,color,year,description) VALUES('${name}','${brand}',${price},${storage},'${color}',${year},'${desc}')`;
+
+  let insert = `INSERT INTO Form (name,brand,price,storage,color,year,description) VALUES(?,?,?,?,?,?,?)`;
+
+  const values = [name, brand, price, storage, color, year, description];
+
+  connection.query(insert, values, (err, result) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).send("Error inserting data");
+    }
+    console.table(result);
+
+    res.send("Data entered completely");
+  });
+});
