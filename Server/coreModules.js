@@ -177,16 +177,12 @@ const app = express();
 
 app.use(express.static(path.join(__dirname, "apple")));
 
-app.get("/", (err, data) => {
+app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "apple", "index.html"));
 });
 
 app.use((req, res) => {
-  res.status(400).send("Page Not Found");
-});
-
-app.get("*", () => {
-  res.sendFile(path.join(__dirname, "apple", "notFound.html"));
+  res.status(404).sendFile(path.join(__dirname, "apple", "notFound.html"));
 });
 
 app.listen(3000, () => {
