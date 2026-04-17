@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Product Form</title>
+  </head>
+  <body>
+    <h2>Add New Product</h2>
+
+    <form action="http://localhost:3001/addIphone" method="POST">
+      <label for="name">Product Name:</label><br />
+      <input
+        type="text"
+        id="name"
+        name="name"
+        placeholder="e.g. iPhone 15 Pro"
+        required
+      /><br /><br />
+
+      <label for="brand">Brand:</label><br />
+      <input type="text" id="brand" name="brand" value="Apple" /><br /><br />
+
+      <label for="price">Price ($):</label><br />
+      <input
+        type="number"
+        id="price"
+        name="price"
+        placeholder="e.g. 999"
+        required
+      /><br /><br />
+
+      <label for="storage">Storage:</label><br />
+      <select id="storage" name="storage">
+        <option value="128">128GB</option>
+        <option value="256">256GB</option>
+        <option value="512">512GB</option>
+        <option value="1">1TB</option></select
+      ><br /><br />
+
+      <label for="color">Color:</label><br />
+      <input
+        type="text"
+        id="color"
+        name="color"
+        placeholder="e.g. Black"
+      /><br /><br />
+
+      <label for="year">Release Year:</label><br />
+      <input
+        type="number"
+        id="year"
+        name="year"
+        placeholder="e.g. 2023"
+      /><br /><br />
+
+      <label for="description">Description:</label><br />
+      <textarea
+        id="description"
+        name="description"
+        rows="4"
+        cols="40"
+      ></textarea
+      ><br /><br />
+
+      <button type="submit">Add Product</button>
+    </form>
+  </body>
+</html>
