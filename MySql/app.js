@@ -126,3 +126,55 @@ app.post("/addIphone", (req, res) => {
     res.send("Data entered completely");
   });
 });
+
+let insertProduct = `INSERT INTO product (product_name, product_url) VALUES (?,?)`;
+let item = ["iphone", "iphone.com"];
+
+app.get("/inserall", (req, res) => {
+  connection.query(insertProduct, item, (err, result) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).send("error inserting product");
+    }
+    let productID = result.insertId;
+    let insertPrice = `INSERT INTO price (price_item, product_id) VALUES (?,?)`;
+    let itemPrice = ["i 700", productID];
+
+    connection.query(insertPrice, itemPrice, (err, result) => {
+      if (err) {
+        console.log(err);
+        return res.status(500).send("error inserting product");
+      }
+
+      res.send("all entered correctly");
+    });
+  });
+});
+
+//* this is just revision after the weekend *//
+
+// const {id,name,price,place,number } = req.body;
+
+// let insert = `INSERT INTO product (id, name, price, place, number) VALUES(?,?,?,?,?)`;
+
+// let values = [id,name,price,place,number];
+
+// connection.query(insert,values,(err,result,fields)=>{
+//   if(err){
+//     console.log(err);
+//     return res.status(500).send("server down");
+//   }
+//   res.send(result);
+// })
+
+app.get("/show", (req, res) => {
+  let select = `SELECT product.product_id AS ID, product_name, price_ID  FROM product JOIN price ON product.product_id = price.product_id`;
+  connection.query(select, (err, results, fields) => {
+    if (err) {
+      console.log(err);
+    }
+    console.table(results);
+
+    res.send(results);
+  });
+});
