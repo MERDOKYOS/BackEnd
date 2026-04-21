@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    div {
+      display: flex;
+      gap: 200px;
+    }
+    section {
+      display: none;
+    }
+  </style>
+  <body>
+    <div>
+      <button id="viewer" onclick="display('view')">VIEW</button>
+      <button onclick="display('NEW')">NEW</button>
+      <button onclick="display('edit')">EDIT</button>
+      <button onclick="display('DELETE')">DELETE</button>
+    </div>
+
+    <section id="view">
+      <div id="userDiv">
+    </div></section>
+
+    <section id="edit">  
+      <form id="myForm">
+        ID:<br />
+        <input type="text" name="id" /><br /><br />
+
+        New Name:<br />
+        <input type="text" name="updatedName" /><br /><br />
+
+        <button id="edit-button">Submit Updated Name</button>
+    </form>
+  </section>
+
+
+    <section id="NEW">   
+    <form action="http://localhost:5000/insert" method="post">
+      name: <br />
+      <input type="text" name="name" /> <br>
+      address: <br />
+      <input type="text" name="address" /> <br>
+      company: <br />
+      <input type="text" name="company" /> <br> <br>
+
+      <input type="submit"></input>
+    </form></section>
+
+
+    <section id="DELETE">
+      <form id="deleter">
+        ID:<br />
+        <input type="text" id="inputID" name="id" /><br /><br />
+        <button id="delete-button">deleting selected element</button>
+      </form>
+    </section>
+
+
+
+    <script>
+      function display(show) {
+        let item = ["view", "edit", "DELETE", "NEW"];
+
+        item.forEach((id) => {
+          document.getElementById(id).style.display = "none";
+        });
+        document.getElementById(show).style.display = "block";
+      }
+
+
+      function edit(e){
+        e.preventDefault();
+        fetch("http://localhost:5000/update",{
+          method:"put",
+          headers:{
+            "Content-Type":"application/json"
+          },
+          body: JSON.stringify({
+            id : document.querySelector("#myForm input[name='id']").value,
+            newName : document.querySelector("#myForm input[name='updatedName']").value
+          }),
+        }).then(res=>
+          res.json()).then(()=>{
+          alert("name Updated")
+        }).catch((err)=>
+          console.log(err))
+      }
+
+      document.getElementById("edit-button").addEventListener("click",edit);
+
+      function deleteinfo(e){
+        e.preventDefault();
+        fetch("http://localhost:5000/delete",{
+          method:"delete",
+          headers:{
+            "Content-Type":"application/json"
+          },
+          body: JSON.stringify({
+            id : document.querySelector("#deleter input[name='id']").value
+          }),
+        }).then(res => res.text())
+        .then(()=>{
+          alert("user deleted");
+	        document.getElementById("deleter").reset();
+        }
+      )
+      }
+      document.getElementById("delete-button").addEventListener("click",deleteinfo);
+
+      function viewInfo(){
+
+       let userDiv=document.getElementById("userDiv")
+
+        fetch("http://localhost:5000/getInfo").then(res=> res.json()).then(data=>{
+          userDiv.innerHTML = ""; // clear old data
+          data.map((customer,i)=>{
+            userDiv.innerHTML +=`
+            <div class="row">
+                <h2>${customer.cusID}</h2>
+                <h2>${customer.name}</h2>
+                <h2>${customer.address}</h2>
+                <h2>${customer.company}</h2>
+			      </div>
+			`
+          })
+        }
+        )
+      }
+
+      document.getElementById("viewer").addEventListener("click",viewInfo)
+
+    </script>
+  </body>
+</html>
