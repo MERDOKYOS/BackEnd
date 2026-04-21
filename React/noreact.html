@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .yellow {
+        background-color: yellow;
+      }
+
+      .orange {
+        background-color: orangered;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="com"></div>
+    <script>
+      // let ul = document.createElement("ul");
+      // let item = ["abebe", "kebede", "demkeu"];
+      // item.forEach((name) => {
+      //   let lielem = document.createElement("li");
+      //   lielem.textContent = name;
+      //   ul.append(lielem);
+      // });
+      // document.body.append(ul);
+
+      // this is another example using vanilla js how the virtual DOM works without react
+
+      let arr = ["banana", "apple", "mango"];
+      x = 0;
+      setInterval(() => {
+        arr[0] = x % 2 == 0 ? "banana" : "orange";
+        let className = arr[0] == "banana" ? "yellow" : "orange";
+        document.getElementById("com").innerHTML = `
+                    <ul>
+                      <li class=${className}>${arr[0]}</li>
+                      <li id="second">Mango</li>
+                      <li id="third">Apple</li>
+                    </ul>
+        `;
+        x++;
+      }, 3000);
+    </script>
+  </body>
+</html>
+
+<!-- this is injecting structure to browser using javascript not html but can be better using react this is one way react does its things  -->
