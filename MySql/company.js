@@ -106,7 +106,16 @@ app.post("/insert", (req, res) => {
 });
 
 app.get("/getInfo", (req, res) => {
-  let select = `SELECT * FROM customers JOIN address JOIN company ON customers.cusID=address.cusID AND customers.cusID = company.cusID`;
+  let select = `
+  SELECT 
+    customers.cusID AS id,
+    customers.name,
+    address.address,
+    company.company
+  FROM customers
+  JOIN address ON customers.cusID = address.cusID
+  JOIN company ON customers.cusID = company.cusID
+  `;
 
   connection.query(select, (err, result) => {
     if (err) {

@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>React Concepts</title>
+  </head>
+  <body>
+    <h5>there are two types of components in react</h5>
+    <p>1. functional</p>
+    <p>
+      this is the one that has function like definition our jsx is written as
+      function form with the components name and the jsx will be in the return
+      place
+    </p>
+    <p>2. class based components</p>
+    <p>
+      this is more of our components are in class based and so our can in
+      herited one anothers behaviour(functions) and variables(single components
+      like button ...)
+    </p>
+
+    <p>this are way to create object and inheritance in older version</p>
+    <pre>
+      function Person(name, age) {
+        this.name = name;
+        this.age = age;
+      
+        this.getName = function () {
+          console.log(`my name is ${this.name} and am ${this.age} years old`);
+        };
+      }
+      
+      function Student(name, age, school) {
+        Person.call(this, name, age);
+        this.school = school;
+      
+        this.getInfo = function () {
+          console.log(
+            `${this.name} is student at ${this.school} and ${this.age} years old`,
+          );
+        };
+      }
+      
+      let merde = new Student("merde", 21, "Bahir Dar");
+      let su = new Person("su", 21);
+      
+      console.log(merde);
+      console.log(su);
+      
+      su.getName();
+      merde.getInfo();
+      
+      Person.prototype.nationality = "ethiopian";
+      
+      Student.prototype = Object.create(Person.prototype);
+      Student.prototype.Constructor = Student;
+    </pre>
+    <script src="./script.js"></script>
+  </body>
+</html>
